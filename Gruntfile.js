@@ -5,6 +5,20 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+
+    //package the theme and remove folders
+    compress: {
+      main: {
+        options: {
+          archive: 'deploy/<%= pkg.name %>.zip'
+        },
+        expand: true,
+        cwd: '.',
+        src: ['**/*','!**/node_modules/**','!**/bower_components/**','!**/scss/**','!**/deploy/**','!**/bower.json','!**/Gruntfile.js','!**/package.json','!**/composer.json','!**/composer.lock','!**/codesniffer.rulese.xml'],
+        dest: '<%= pkg.name %>'
+      },
+    },
+
     sass: {
       options: {
         // If you can't get source maps to work, run the following command in your terminal:
@@ -139,7 +153,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-string-replace');
+  grunt.loadNpmTasks('grunt-contrib-compress');  
 
+  grunt.registerTask('deploy', ['compress:main']);
   grunt.registerTask('build', ['copy', 'string-replace:fontawesome', 'sass', 'concat', 'uglify']);
   grunt.registerTask('default', ['watch']);
 };
