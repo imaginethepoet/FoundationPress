@@ -10,7 +10,7 @@ module.exports = function(grunt) {
     compress: {
       main: {
         options: {
-          archive: 'deploy/<%= pkg.name %>.zip'
+          archive: 'packaged/<%= pkg.name %>.zip'
         },
         expand: true,
         cwd: '.',
@@ -155,7 +155,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-string-replace');
   grunt.loadNpmTasks('grunt-contrib-compress');  
 
-  grunt.registerTask('deploy', ['compress:main']);
+  grunt.registerTask('package', ['compress:main']);
   grunt.registerTask('build', ['copy', 'string-replace:fontawesome', 'sass', 'concat', 'uglify']);
   grunt.registerTask('default', ['watch']);
 };
